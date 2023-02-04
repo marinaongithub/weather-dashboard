@@ -1,7 +1,7 @@
 var city;
 
 // today's date
-var today = moment().format("D/M/YY");
+var today = moment().format("D/M/YYYY");
 
 // gets the user input when the search button is clicked
 
@@ -43,7 +43,7 @@ $("#search-button").on("click", function(event) {
             // data for today
             var todayData = results[0];
             // weather for today 
-            var todayW = [{date: today, icon: todayData.weather[0].icon, temp: todayData.main.temp, wind: todayData.wind.speed, humidity: todayData.main.humidity}];
+            var todayW = {date: today, icon: todayData.weather[0].icon, temp: (todayData.main.temp - 273.15).toFixed(), wind: todayData.wind.speed, humidity: todayData.main.humidity};
             var daysW = [];
 
             console.log(todayW);
@@ -63,7 +63,7 @@ $("#search-button").on("click", function(event) {
 
                     // stores the item specific weather data
                     var icon = dayData.weather[0].icon;
-                    var temp = dayData.main.temp;
+                    var temp = (dayData.main.temp - 273.15).toFixed();
                     var wind = dayData.wind.speed
                     var humidity = dayData.main.humidity;
 
@@ -76,6 +76,7 @@ $("#search-button").on("click", function(event) {
                 
             } 
             console.log(daysW);
+            renderToday(todayW);
 
             
         })
@@ -83,3 +84,18 @@ $("#search-button").on("click", function(event) {
     })
 
 })
+
+function renderToday(todayW) {
+
+    $("#today").append(`<h4>${city} (${todayW.date})<img src=http://openweathermap.org/img/wn/${todayW.icon}@2x.png></h4>`);
+    $("#today").append(
+        `<p>
+<pre>
+Temp: ${todayW.temp}°C
+Wind: ${todayW.wind} KPH
+Humidity: ${todayW.humidity}%
+</pre>
+        </p>`
+        );
+    
+}
