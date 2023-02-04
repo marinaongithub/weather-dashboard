@@ -1,35 +1,76 @@
 var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
 
-var city;
+var city = "bagdad";
 
-// location latitude
-var lat;
-// location longitude
-var lon;
+// today's date
+var today = moment().format("D/M/YY");
 
-// Gets the coordinates from the city name
-function getCoor(city) {
+console.log(today);
 
-    var geoAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;  //&limit={limit}
 
+    var geoAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; 
+
+    // Gets the coordinates from the city name
     $.ajax({
         url: geoAPI,
         method: "GET"
+        
     }).then(function(response) {
-        console.log(response);
-        lat = response[0].lat;
-        lon = response[0].lon;
-        console.log(lat);
-    });
 
-    // returns the latitude and longitude
-    return [lat, lon];
+        // location latitude
+        var lat = response[0].lat;
 
-}
+        // location longitude
+        var lon = response[0].lon;
 
-var coord = getCoor("bagdad")
+        var queryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-    // Gets weather data for specific coordinates
-    function getWeather(coord);
-    var queryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        // Gets the weather data
+        $.ajax({
+            url: queryUrl,
+            method: "GET"
+        }).then(function(data) {
+            console.log(data);
 
+            var results = data.list;
+
+            // data for today
+            var todayData = results[0];
+            // weather for today 
+            var todayW = [{date: today, icon: todayData.weather[0].icon, temp: todayData.main.temp, wind: todayData.wind.speed, humidity: todayData.main.humidity}];
+            var daysW = [];
+
+            console.log(todayW);
+
+            // loops through the results and select the items where the time is 12:00
+            for (var i = 1; i < results.length; i++) {
+
+                // stores the item data
+                var dayData = results[i];
+
+                // stores the item date and time
+                var date = dayData.dt_txt;
+
+                // checks if the item time is 12:00
+                if (date.includes("12:00:00")) {
+
+
+                    // stores the item specific weather data
+                    var icon = dayData.weather.icon;
+                    var temp = dayData.main.temp;
+                    var wind = dayData.wind.speed
+                    var humidity = dayData.main.humidity;
+
+                    // creates an object for the selected day with the corresponding weather data
+                    var day = {date: date, icon: icon, temp: temp, wind: wind, humidity: humidity}
+
+                    // pushes each object to the array to get the 5-days forecast
+                    daysW.push(day);
+                }
+                
+                console.log(daysW);
+            } 
+            
+        })
+
+    })
