@@ -1,18 +1,24 @@
-var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
-
-var city = "bagdad";
+var city;
 
 // today's date
 var today = moment().format("D/M/YY");
 
-console.log(today);
+// gets the user input when the search button is clicked
 
+$("#search-button").on("click", function(event) {
+
+    event.preventDefault();
+
+    city = $("#search-input").val().trim();
+
+
+    var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
 
     var geoAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; 
 
     // Gets the coordinates from the city name
     $.ajax({
-        url: geoAPI,
+    url: geoAPI,
         method: "GET"
         
     }).then(function(response) {
@@ -25,7 +31,7 @@ console.log(today);
 
         var queryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-        // Gets the weather data
+        // Gets the weather data from the coordinates
         $.ajax({
             url: queryUrl,
             method: "GET"
@@ -56,7 +62,7 @@ console.log(today);
 
 
                     // stores the item specific weather data
-                    var icon = dayData.weather.icon;
+                    var icon = dayData.weather[0].icon;
                     var temp = dayData.main.temp;
                     var wind = dayData.wind.speed
                     var humidity = dayData.main.humidity;
@@ -68,9 +74,12 @@ console.log(today);
                     daysW.push(day);
                 }
                 
-                console.log(daysW);
             } 
+            console.log(daysW);
+
             
         })
 
     })
+
+})
