@@ -7,3 +7,28 @@ img {
     width: 40px;
     height: 40px;
 }
+
+/* Forecast section  */
+
+#forecast {
+    justify-content: center;
+}
+
+#forecast h5 {
+    width: 100%;
+    padding: 15px;
+}
+
+.card{
+    background-color: rgb(25, 25, 140)!important;
+    color: white;
+    padding: 5px;
+    width: 160px;
+
+}
+.card pre{
+    background-color: rgb(25, 25, 140)!important;
+    color: white;
+    width: 100%;
+
+}

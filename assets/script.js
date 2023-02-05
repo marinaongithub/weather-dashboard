@@ -75,9 +75,12 @@ $("#search-button").on("click", function(event) {
                 }
                 
             } 
-            console.log(daysW);
+
+            // Renders todays weather
             renderToday(todayW);
 
+            //Renders 5-day forecast
+            renderForecast(daysW);
             
         })
 
@@ -85,17 +88,41 @@ $("#search-button").on("click", function(event) {
 
 })
 
+
 function renderToday(todayW) {
 
     $("#today").append(`<h4>${city} (${todayW.date})<img src=http://openweathermap.org/img/wn/${todayW.icon}@2x.png></h4>`);
     $("#today").append(
-        `<p>
-<pre>
+        `<pre>
 Temp: ${todayW.temp}°C
 Wind: ${todayW.wind} KPH
 Humidity: ${todayW.humidity}%
-</pre>
-        </p>`
-        );
-    
+        </pre>`
+        ); 
 }
+
+function renderForecast(daysW) {
+
+    $("#forecast").append(`<h5>5-Day Forecast:</h5>`);        
+    $("#forecast").append(`<div class="card-deck"></div>`);
+
+    for (var j = 0; j < daysW.length; j++) {
+
+        $(".card-deck").append(`<div class="card" id=${j}></div>`);
+        
+        $(`#${j}`).append(`<h6>${moment(daysW[j].date).format('D/M/YYYY')}</h5>`);
+
+        $(`#${j}`).append(`<img src=http://openweathermap.org/img/wn/${daysW[j].icon}@2x.png>`)
+        
+        $(`#${j}`).append(`<pre>
+        
+Temp: ${daysW[j].temp}°C
+Wind: ${daysW[j].wind} KPH
+Humidity: ${daysW[j].humidity}%
+</pre>`);
+
+}
+
+}
+
+
