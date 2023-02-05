@@ -67,7 +67,8 @@ img {
 }
 
 .card-deck {
-    margin: 0px ;
+    margin: 0px;
+    width: 98%;
 
 }
 

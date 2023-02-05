@@ -3,6 +3,8 @@ var city;
 // today's date
 var today = moment().format("D/M/YYYY");
 
+renderHistory();
+
 // gets the user input when the search button is clicked
 
 $("#search-button").on("click", function(event) {
@@ -136,6 +138,7 @@ Humidity: ${daysW[j].humidity}%
 }
 
 function storesCity(city){
+
     $(".input-group-append").after($(`<button class=btn>${city}</button>`));
     var history = [];
 
@@ -143,10 +146,26 @@ function storesCity(city){
         history = JSON.parse(localStorage.getItem("history"))
     }
 
-    history.push(city);
+    if (!history.includes(city)) {
+        history.push(city);
+    }
 
     localStorage.setItem("history", JSON.stringify(history));
 
+}
+
+function renderHistory() {
+
+    cityHistory = JSON.parse(localStorage.getItem("history"));
+
+    if (cityHistory !== null) {
+
+        console.log(cityHistory);
+    
+        for (var k = 0; k < cityHistory.length; k++ ) {
+            $(".input-group-append").after($(`<button class=btn>${cityHistory[k]}</button>`));
+        }
+    }
 }
 
 
