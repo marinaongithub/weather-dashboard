@@ -40,6 +40,8 @@ $("#search-button").on("click", function(event) {
 
             var results = data.list;
 
+            console.log(results);
+
             // data for today
             var todayData = results[0];
             // weather for today 
@@ -58,7 +60,7 @@ $("#search-button").on("click", function(event) {
                 var date = dayData.dt_txt;
 
                 // checks if the item time is 12:00
-                if (date.includes("12:00:00")) {
+                if ( (date.includes("12:00:00")) || (i === (results.length - 1) && daysW.push(day) < 5) ) {
 
 
                     // stores the item specific weather data
@@ -75,6 +77,7 @@ $("#search-button").on("click", function(event) {
                 }
                 
             } 
+            console.log(daysW);
 
             // Renders todays weather
             renderToday(todayW);
@@ -83,6 +86,7 @@ $("#search-button").on("click", function(event) {
             renderForecast(daysW);
             
         })
+
 
     })
 

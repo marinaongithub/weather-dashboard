@@ -1,3 +1,11 @@
+/* Header */
+
+.weather-header {
+   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 70%);
+}
+
+/* Today weather */
+
 #today {
     border: 1px solid;
     padding: 10px;
@@ -20,15 +28,12 @@ img {
 }
 
 .card{
-    background-color: rgb(25, 25, 140)!important;
+    background-color: #44a0df!important;
     color: white;
     padding: 5px;
     width: 160px;
 
 }
 .card pre{
-    background-color: rgb(25, 25, 140)!important;
     color: white;
-    width: 100%;
-
 }
