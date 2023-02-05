@@ -4,10 +4,48 @@
    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 70%);
 }
 
-/* Today weather */
+
+/* Search section */
+
+.input-group {
+    flex-direction: column;
+    justify-content: center;
+}
+
+#search-input {
+    margin: 5px;
+}
+
+.input-group-append {
+    justify-content: center;
+    flex-direction: column;
+}
+
+button {
+    height: 30px;
+    width: 96%;
+    margin: 2px 6px !important;
+    padding: 0px !important;
+    border-radius: 4px !important;
+    background-color: #3a59b4c7 !important;
+    color: white !important;
+}
+
+#search-button {
+    background-color: #2d5ab2 !important;
+    margin: auto !important;
+}
+
+.weather-hr {
+    border : 1px solid grey;
+    width: 100%;
+    margin: 10px 0px;
+}
+
+
+/* Today's weather */
 
 #today {
-    border: 1px solid;
     padding: 10px;
 }
 
@@ -15,6 +53,7 @@ img {
     width: 40px;
     height: 40px;
 }
+
 
 /* Forecast section  */
 
@@ -27,13 +66,19 @@ img {
     padding: 15px;
 }
 
+.card-deck {
+    margin: 0px ;
+
+}
+
 .card{
     background-color: #44a0df!important;
     color: white;
     padding: 5px;
-    width: 160px;
-
+    width: 135px;
+    margin: 10px !important;
 }
+
 .card pre{
     color: white;
 }

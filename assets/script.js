@@ -7,10 +7,22 @@ var today = moment().format("D/M/YYYY");
 
 $("#search-button").on("click", function(event) {
 
+
+    event.preventDefault();
+    city = $("#search-input").val().trim();
+    getWeather(city);
+    storesCity(city);
+
+})
+
+    
+
+$(".input-group-append").on('click', 'button', function(event) {
     event.preventDefault();
 
-    city = $("#search-input").val().trim();
+})
 
+function getWeather(city) {
 
     var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
 
@@ -60,7 +72,7 @@ $("#search-button").on("click", function(event) {
                 var date = dayData.dt_txt;
 
                 // checks if the item time is 12:00
-                if ( (date.includes("12:00:00")) || (i === (results.length - 1) && daysW.push(day) < 5) ) {
+                if ( (date.includes("12:00:00")) || ((i === (results.length - 1)) && (daysW < 5) )) {
 
 
                     // stores the item specific weather data
@@ -74,26 +86,23 @@ $("#search-button").on("click", function(event) {
 
                     // pushes each object to the array to get the 5-days forecast
                     daysW.push(day);
-                }
-                
+                }  
             } 
-            console.log(daysW);
 
             // Renders todays weather
             renderToday(todayW);
 
             //Renders 5-day forecast
             renderForecast(daysW);
-            
         })
-
-
     })
-
-})
+}
 
 
 function renderToday(todayW) {
+
+    $("#today").css("border", "1px solid");
+
 
     $("#today").append(`<h4>${city} (${todayW.date})<img src=http://openweathermap.org/img/wn/${todayW.icon}@2x.png></h4>`);
     $("#today").append(
@@ -123,10 +132,22 @@ function renderForecast(daysW) {
 Temp: ${daysW[j].temp}°C
 Wind: ${daysW[j].wind} KPH
 Humidity: ${daysW[j].humidity}%
-</pre>`);
+</pre>`);}
+}
+
+function storesCity(city){
+    $(".input-group-append").after($(`<button class=btn>${city}</button>`));
+    var history = [];
+
+    if (JSON.parse(localStorage.getItem("history")) !== null) {
+        history = JSON.parse(localStorage.getItem("history"))
+    }
+
+    history.push(city);
+
+    localStorage.setItem("history", JSON.stringify(history));
 
 }
 
-}
 
 
