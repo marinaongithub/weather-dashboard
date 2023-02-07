@@ -37,7 +37,7 @@ function getWeather(city) {
 
     var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
 
-    var geoAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; 
+    var geoAPI = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; 
 
     // Gets the coordinates from the city name
     $.ajax({
