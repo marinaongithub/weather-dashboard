@@ -1,7 +1,8 @@
 var city;
+var cityHistory;
 
 // today's date
-var today = moment().format("D/M/YYYY");
+const today = moment().format("D/M/YYYY");
 
 
 renderHistory();
@@ -27,6 +28,7 @@ $(document).on('click', ".history", function(event) {
     event.preventDefault();
 
     city = event.target.textContent;
+
     getWeather(city);
 
 })
@@ -35,9 +37,11 @@ $(document).on('click', ".history", function(event) {
 // Gets the weather data for a specific city
 function getWeather(city) {
 
-    var apiKey = "31d2a57690ef85e96a85e5e5562d0140"
+    var search = city.replace("-", " ");
 
-    var geoAPI = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; 
+    var apiKey = "31d2a57690ef85e96a85e5e5562d0140";
+
+    var geoAPI = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=1&appid=${apiKey}`; 
 
     // Gets the coordinates from the city name
     $.ajax({
@@ -107,7 +111,7 @@ function getWeather(city) {
 // Dispays today's weather data
 function renderToday(todayW) {
 
-     $("#today").empty();
+    $("#today").empty();
 
     $("#today").css("border", "1px solid");
 
@@ -160,8 +164,11 @@ function storesCity(city){
             }
         }
 
-        $(".input-group-append").after($(`<button id=${city}>${city}</button>`));
-        $(`#${city}`).attr("class", "btn history")
+        var cityId = city.replace(" ", "-")   
+        console.log(cityId)
+
+        $(".input-group-append").after($(`<button id=${cityId}>${city}</button>`));
+        $(`#${cityId}`).attr("class", "btn history")
 
         history.push(city);
 
@@ -178,6 +185,9 @@ function renderHistory() {
     
 
         for (var k = 0; k < cityHistory.length; k++ ) {
+
+            // var cityIdHistory = city.replace(" ", "-")   
+
             $(".input-group-append").after($(`<button id=${cityHistory[k]}>${cityHistory[k]}</button>`));
             $(`#${cityHistory[k]}`).attr("class", "btn history")
         }
